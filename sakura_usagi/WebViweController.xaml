@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="sakura_usagi.WebViweController"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:sakura_usagi"
+             mc:Ignorable="d" Height="51" Width="194">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Name="ButtonGo" Content="Go" Grid.Column="1" Margin="0,0,0,0" Click="ButtonGo_Click"/>
+            <ComboBox Name="ComboBoxFavorite" Grid.Column="0"  Margin="0,0,0,0"/>
+        </Grid>
+        <TextBox Name="TextBoxAddress" Grid.Row="0" Text="TextBox" TextWrapping="Wrap" Margin="0,0,0,0"/>
+    </Grid>
+</UserControl>

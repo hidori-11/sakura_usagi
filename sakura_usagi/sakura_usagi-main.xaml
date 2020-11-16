@@ -6,7 +6,44 @@
         xmlns:local="clr-namespace:sakura_usagi"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
+        <Grid Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Window :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" />
+            <Button Content="Add" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,10,0"/>
+            <Button Content="Close" Grid.Column="3" VerticalAlignment="Center" Margin="10,0,10,0"/>
 
-    </Grid>
+        </Grid>
+        <TabControl Margin="0,0,0,0" Height="399">
+            <TabItem Header="Basic">
+                <Grid Background="#FFE5E5E5" Height="371" VerticalAlignment="Top">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="345*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="X" Grid.Column="0" Margin="14,0,14,0"/>
+                        <TextBox Grid.Column="1" Name="TextBox_X"  Text="1" TextWrapping="Wrap" Margin="10,4,10,4"/>
+                        <Label Content="Y" Grid.Column="2" Margin="14,0,14,0"/>
+                        <TextBox Grid.Column="3" Name="TextBox_Y" Text="1" TextWrapping="Wrap" Margin="10,4,10,4"/>
+                    </Grid>
+                    <Grid Name="ControllerGrid" Margin="0,0,0,0" Grid.Row="1">
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </StackPanel>
 </Window>
