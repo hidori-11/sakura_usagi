@@ -16,8 +16,8 @@
             </Grid.ColumnDefinitions>
             <Label Content="Window :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ComboBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" />
-            <Button Content="Add" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,10,0"/>
-            <Button Content="Close" Grid.Column="3" VerticalAlignment="Center" Margin="10,0,10,0"/>
+            <Button Content="Add" Name="Add" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,10,0" Click="Add_Click"/>
+            <Button Content="Close" Name="Close" Grid.Column="3" VerticalAlignment="Center" Margin="10,0,10,0" Click="Close_Click"/>
 
         </Grid>
         <TabControl Margin="0,0,0,0" Height="399">
@@ -26,6 +26,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="26*"/>
                         <RowDefinition Height="345*"/>
+                        <RowDefinition Height="26*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
@@ -41,6 +42,7 @@
                     </Grid>
                     <Grid Name="ControllerGrid" Margin="0,0,0,0" Grid.Row="1">
                     </Grid>
+                    <Button Content="Reflect" Name="Reflect" Grid.Row="2" VerticalAlignment="Center" Margin="10,0,10,0" Click="Reflect_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
