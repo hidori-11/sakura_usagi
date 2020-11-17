@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace sakura_usagi
             InitializeComponent();
             webcontrol = new WebView2();
             this.setting = setting;
+            this.Unloaded += This_Unloaded;
         }
 
         public void InitWebView()
@@ -51,6 +53,11 @@ namespace sakura_usagi
             {
                 webcontrol.CoreWebView2.Navigate(TextBoxAddress.Text);
             }
+        }
+
+        private void This_Unloaded(object sender, EventArgs e)
+        {
+            webcontrol.Dispose();
         }
 
         public static bool IsUrl(string input)
