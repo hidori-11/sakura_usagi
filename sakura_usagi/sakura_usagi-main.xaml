@@ -28,9 +28,21 @@
             <TabItem Header="Basic">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="26"/>
                         <RowDefinition Height="345*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Name="ControllerGrid" Margin="0,0,0,0" Grid.Row="0">
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Grid">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
                         <RowDefinition Height="26*"/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="200*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
@@ -44,9 +56,10 @@
                         <Label Content="Y : " Grid.Column="2" HorizontalAlignment="Right"/>
                         <TextBox Grid.Column="3" Name="TextBox_Y" Text="1" TextWrapping="Wrap" Margin="10,4,10,4"/>
                     </Grid>
-                    <Grid Name="ControllerGrid" Margin="0,0,0,0" Grid.Row="1">
-                    </Grid>
-                    <Button Content="Reflect" Name="Reflect" Grid.Row="2" VerticalAlignment="Center" Margin="10,0,10,0" Click="Reflect_Click"/>
+                    <Label Content="Length Ratio" Grid.Row="1"/>
+                    <Grid Grid.Row="2" Name="WidthRatio"/>
+                    <Grid Grid.Row="3" Name="HeightRatio"/>
+                    <Button Content="Reflect" Name="Reflect" Grid.Row="4" VerticalAlignment="Center" Margin="10,0,10,0" Click="Reflect_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

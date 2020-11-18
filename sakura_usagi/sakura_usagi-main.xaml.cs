@@ -11,6 +11,10 @@ namespace sakura_usagi
     {
         SettingLoader setting;
         WebViweController[,] webViweControllers;
+
+        TextBox[] rowRatioTextBoxs;
+        TextBox[] columnRatioTextBoxs;
+
         BrowserWindow browserWindow;
 
         public MainWindow()
@@ -19,6 +23,7 @@ namespace sakura_usagi
             setting = new SettingLoader();
             Add.IsEnabled = false;
             Close.IsEnabled = false;
+
             browserWindow = new BrowserWindow();
             browserWindow.Show();
              
@@ -75,6 +80,8 @@ namespace sakura_usagi
 
             browserWindow.BrowserGrid.Children.Clear();
             ControllerGrid.Children.Clear();
+            HeightRatio.Children.Clear();
+            WidthRatio.Children.Clear();
 
             browserWindow.BrowserGrid.ColumnDefinitions.Clear();
             browserWindow.BrowserGrid.RowDefinitions.Clear();
@@ -82,16 +89,41 @@ namespace sakura_usagi
             ControllerGrid.ColumnDefinitions.Clear();
             ControllerGrid.RowDefinitions.Clear();
 
+            HeightRatio.ColumnDefinitions.Clear();
+
+            WidthRatio.ColumnDefinitions.Clear();
+
+            HeightRatio.ColumnDefinitions.Add(new ColumnDefinition());
+            HeightRatio.ColumnDefinitions.Add(new ColumnDefinition());
+
+            WidthRatio.ColumnDefinitions.Add(new ColumnDefinition());
+            WidthRatio.ColumnDefinitions.Add(new ColumnDefinition());
+
+            rowRatioTextBoxs = new TextBox[row_count];
+            columnRatioTextBoxs = new TextBox[column_count];
+
             for (int y = 0; y < row_count; y++)
             {
                 browserWindow.BrowserGrid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
                 ControllerGrid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition());
+                HeightRatio.ColumnDefinitions.Add(new ColumnDefinition());
+                
+                var tb = SetRatioTextBox();
+                Grid.SetColumn(tb, y + 1);
+                HeightRatio.Children.Add(tb);
+                rowRatioTextBoxs[y] = tb;
             }
 
             for (int x = 0; x < column_count; x++)
             {
                 browserWindow.BrowserGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
                 ControllerGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());
+                WidthRatio.ColumnDefinitions.Add(new ColumnDefinition());
+
+                var tb = SetRatioTextBox();
+                Grid.SetColumn(tb, x + 1);
+                WidthRatio.Children.Add(tb);
+                columnRatioTextBoxs[x] = tb;
             }
 
 
@@ -127,6 +159,61 @@ namespace sakura_usagi
             GC.Collect();
 
             SwitchEnable(true);
+        }
+
+        private TextBox SetRatioTextBox()
+        {
+            TextBox tb = new TextBox();
+            tb.Text = "1";
+            tb.TextChanged += RatioTextBoxTextChangedEvent;
+            return tb;
+
+        }
+
+        private void RatioTextBoxTextChangedEvent(object sender, EventArgs e)
+        {
+            browserWindow.BrowserGrid.ColumnDefinitions.Clear();
+            browserWindow.BrowserGrid.RowDefinitions.Clear();
+
+            ControllerGrid.ColumnDefinitions.Clear();
+            ControllerGrid.RowDefinitions.Clear();
+
+            for (int y = 0; y < rowRatioTextBoxs.Length; y++)
+            {
+                uint heightRatio = 1;
+                if (uint.TryParse(rowRatioTextBoxs[y].Text, out heightRatio))
+                {
+                    browserWindow.BrowserGrid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition
+                    {
+                        Height = new GridLength(heightRatio, GridUnitType.Star)
+                    });
+
+                    ControllerGrid.RowDefinitions.Add(new System.Windows.Controls.RowDefinition
+                    {
+                        Height = new GridLength(heightRatio, GridUnitType.Star)
+                    });
+                }
+            }
+
+            for (int x = 0; x < columnRatioTextBoxs.Length; x++)
+            {
+                uint widthRatio = 1;
+
+                if (uint.TryParse(columnRatioTextBoxs[x].Text, out widthRatio))
+                {
+                    browserWindow.BrowserGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition
+                    {
+                        Width = new GridLength(widthRatio, GridUnitType.Star)
+                    });
+
+                    ControllerGrid.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition
+                    {
+                        Width = new GridLength(widthRatio, GridUnitType.Star)
+                    });
+                }
+
+            }
+
         }
 
         private void SwitchEnable(bool isEnable)
