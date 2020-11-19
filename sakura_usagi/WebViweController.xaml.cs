@@ -19,8 +19,8 @@ namespace sakura_usagi
         {
             InitializeComponent();
             webcontrol = new WebView2();
+            webcontrol.Unloaded += This_Unloaded;
             this.setting = setting;
-            this.Unloaded += This_Unloaded;
         }
 
         public void InitWebView()
