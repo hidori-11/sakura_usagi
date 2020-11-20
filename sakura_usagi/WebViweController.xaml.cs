@@ -45,6 +45,9 @@ namespace sakura_usagi
                 await webView.EnsureCoreWebView2Async(environment);
             }
             webView.Source = new Uri(setting?.HomePage ?? "https://www.google.com");
+
+            sliderPan.ValueChanged += sliderPan_ValueChanged;
+            sliderVolume.ValueChanged += sliderVolume_ValueChanged;
         }
 
         private void ButtonGo_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -70,6 +73,39 @@ namespace sakura_usagi
                input,
                @"^s?https?://[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+$"
             );
+        }
+
+        private void sliderPan_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        {
+            setPanAndVolume((float)(sliderVolume.Value / 100), (float)(sliderPan.Value / 100));
+        }
+
+        private void sliderVolume_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        {
+            setPanAndVolume((float)(sliderVolume.Value / 100), (float)(sliderPan.Value / 100));
+        }
+
+        private async void setPanAndVolume(float volume, float pan)
+        {
+            string command =
+
+                @"const video = document.querySelector('video');" +
+                @"const audioCtx = new (window.AudioContext)();" +
+                @"const audioSource = audioCtx.createMediaElementSource(video);" +
+                @"const audioGainNode = audioCtx.createGain();" +
+                @"const audioPanNode = audioCtx.createStereoPanner();" +
+                @"audioSource.connect(audioGainNode);" +
+                @"audioGainNode.connect(audioPanNode);" +
+                @"audioPanNode.connect(audioCtx.destination);";
+
+            await webcontrol.CoreWebView2.ExecuteScriptAsync(command);
+
+            string command2 =
+                // ボリュームとパン操作
+                @"audioGainNode.gain.value =" + volume.ToString("0.00") +@";"+
+                @"audioPanNode.pan.setValueAtTime("+ pan.ToString("0.00") +@", audioCtx.currentTime);";
+
+            await webcontrol.CoreWebView2.ExecuteScriptAsync(command2);
         }
     }
 }
