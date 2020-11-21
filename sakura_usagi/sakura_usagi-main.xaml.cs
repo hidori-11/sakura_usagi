@@ -29,17 +29,17 @@ namespace sakura_usagi
              
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void Add_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Close_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void Reflect_Click(object sender, RoutedEventArgs e)
+        private void Reflect_Click(object sender, EventArgs e)
         {
             SwitchEnable(false);
 
