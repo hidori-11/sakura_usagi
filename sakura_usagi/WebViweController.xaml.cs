@@ -20,6 +20,7 @@ namespace sakura_usagi
             InitializeComponent();
             webcontrol = new WebView2();
             webcontrol.Unloaded += This_Unloaded;
+            webcontrol.NavigationCompleted += Webcontrol_NavigationCompleted;
             this.setting = setting;
         }
 
@@ -50,7 +51,7 @@ namespace sakura_usagi
             sliderVolume.ValueChanged += sliderVolume_ValueChanged;
         }
 
-        private void ButtonGo_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ButtonGo_Click(object sender, EventArgs e)
         {
             if (IsUrl(TextBoxAddress.Text))
             {
@@ -75,12 +76,18 @@ namespace sakura_usagi
             );
         }
 
-        private void sliderPan_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        private void sliderPan_ValueChanged(object sender, EventArgs e)
         {
             setPanAndVolume((float)(sliderVolume.Value / 100), (float)(sliderPan.Value / 100));
         }
 
-        private void sliderVolume_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        private void sliderVolume_ValueChanged(object sender, EventArgs e)
+        {
+            setPanAndVolume((float)(sliderVolume.Value / 100), (float)(sliderPan.Value / 100));
+        }
+
+
+        private void Webcontrol_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
             setPanAndVolume((float)(sliderVolume.Value / 100), (float)(sliderPan.Value / 100));
         }
@@ -89,14 +96,15 @@ namespace sakura_usagi
         {
             string command =
 
-                @"const video = document.querySelector('video');" +
-                @"const audioCtx = new (window.AudioContext)();" +
-                @"const audioSource = audioCtx.createMediaElementSource(video);" +
-                @"const audioGainNode = audioCtx.createGain();" +
-                @"const audioPanNode = audioCtx.createStereoPanner();" +
-                @"audioSource.connect(audioGainNode);" +
-                @"audioGainNode.connect(audioPanNode);" +
-                @"audioPanNode.connect(audioCtx.destination);";
+               @"const video = document.querySelector('video');" +
+               @"const audioCtx = new (window.AudioContext)();" +
+               @"const audioSource = audioCtx.createMediaElementSource(video);" +
+               @"const audioGainNode = audioCtx.createGain();" +
+               @"const audioPanNode = audioCtx.createStereoPanner();" +
+               @"audioSource.connect(audioGainNode);" +
+               @"audioGainNode.connect(audioPanNode);" +
+               @"audioPanNode.connect(audioCtx.destination);";
+
 
             await webcontrol.CoreWebView2.ExecuteScriptAsync(command);
 

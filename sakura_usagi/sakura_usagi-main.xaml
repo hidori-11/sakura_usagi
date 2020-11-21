@@ -26,7 +26,7 @@
         </Grid>
         <TabControl Grid.Row="1" Margin="0,0,0,0">
             <TabItem Header="Basic">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="345*"/>
                     </Grid.RowDefinitions>
@@ -56,10 +56,11 @@
                         <Label Content="Y : " Grid.Column="2" HorizontalAlignment="Right"/>
                         <TextBox Grid.Column="3" Name="TextBox_Y" Text="1" TextWrapping="Wrap" Margin="10,4,10,4"/>
                     </Grid>
-                    <Label Content="Length Ratio" Grid.Row="1"/>
-                    <Grid Grid.Row="2" Name="WidthRatio"/>
-                    <Grid Grid.Row="3" Name="HeightRatio"/>
-                    <Button Content="Reflect" Name="Reflect" Grid.Row="4" VerticalAlignment="Center" Margin="10,0,10,0" Click="Reflect_Click"/>
+                    <Button Content="Reflect" Name="Reflect" Grid.Row="1" VerticalAlignment="Center" Margin="10,0,10,0" Click="Reflect_Click"/>
+                    <Label Content="Length Ratio" Grid.Row="2"/>
+                    <Grid Grid.Row="3" Name="WidthRatio"/>
+                    <Grid Grid.Row="4" Name="HeightRatio"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>
