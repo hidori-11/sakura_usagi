@@ -20,7 +20,7 @@
             <Button Name="ButtonGo" Content="Go" Grid.Column="1" Margin="0,0,0,0"/>
             <ComboBox Name="ComboBoxFavorite" Grid.Column="0"  Margin="0,0,0,0"/>
         </Grid>
-        <TextBox Name="TextBoxAddress" Grid.Row="0" Text="TextBox" TextWrapping="Wrap" Margin="0,0,0,0"/>
+        <TextBox Name="TextBoxAddress" Text="TextBox" TextWrapping="Wrap" Margin="0,0,0,0" MaxLines="1"/>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="25"/>

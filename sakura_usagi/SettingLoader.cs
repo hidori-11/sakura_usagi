@@ -21,19 +21,15 @@ namespace sakura_usagi
             }
             else
             {
-                Settings settings = new Settings
+                Settings = new Settings
                 {
                     CachePath = "Caches",
                     HomePage = "https://google.com",
                     UserDataPath = "UserDatas"
                 };
 
-                string default_json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                string default_json = JsonConvert.SerializeObject(Settings, Formatting.Indented);
                 File.WriteAllText(settingFilePath, default_json);
-
-                Settings.UserDataPath = settings.UserDataPath;
-                Settings.HomePage = settings.HomePage;
-                Settings.CachePath = settings.CachePath;
             }
         }
     }

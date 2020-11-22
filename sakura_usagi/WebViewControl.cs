@@ -18,7 +18,6 @@ namespace sakura_usagi
             WebViewController.ButtonGo.Click += ButtonGo_Click;
             WebControl = new WebView2();
             WebControl.Unloaded += This_Unloaded;
-            WebControl.NavigationCompleted += Webcontrol_NavigationCompleted;
             this.Setting = setting;
         }
 
@@ -47,6 +46,8 @@ namespace sakura_usagi
 
             WebViewController.sliderPan.ValueChanged += sliderPan_ValueChanged;
             WebViewController.sliderVolume.ValueChanged += sliderVolume_ValueChanged;
+            webView.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
+            webView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
         }
 
         public void SetGrid(uint x, uint y)
@@ -67,10 +68,19 @@ namespace sakura_usagi
             setPanAndVolume((float)(WebViewController.sliderVolume.Value / 100), (float)(WebViewController.sliderPan.Value / 100));
         }
 
-
-        private void Webcontrol_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
+        private void CoreWebView2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
         {
-            setPanAndVolume((float)(WebViewController.sliderVolume.Value / 100), (float)(WebViewController.sliderPan.Value / 100));
+            WebViewController.TextBoxAddress.Text = WebControl.CoreWebView2.Source;
+        }
+
+        private void CoreWebView2_NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            WebControl.CoreWebView2.Navigate(e.Uri);
+        }
+
+        private void WebControl_DOMContentLoded(object sender, CoreWebView2DOMContentLoadedEventArgs e)
+        {
+            initPanAndVolume();
         }
 
         private void ButtonGo_Click(object sender, EventArgs e)
@@ -84,6 +94,23 @@ namespace sakura_usagi
         private void This_Unloaded(object sender, EventArgs e)
         {
             WebControl.Dispose();
+        }
+
+        private async void initPanAndVolume()
+        {
+            string command =
+
+               @"const video = document.querySelector('video');" +
+               @"const audioCtx = new (window.AudioContext)();" +
+               @"const audioSource = audioCtx.createMediaElementSource(video);" +
+               @"const audioGainNode = audioCtx.createGain();" +
+               @"const audioPanNode = audioCtx.createStereoPanner();" +
+               @"audioSource.connect(audioGainNode);" +
+               @"audioGainNode.connect(audioPanNode);" +
+               @"audioPanNode.connect(audioCtx.destination);";
+
+
+            await WebControl.CoreWebView2.ExecuteScriptAsync(command);
         }
 
         private async void setPanAndVolume(float volume, float pan)
@@ -110,7 +137,7 @@ namespace sakura_usagi
             await WebControl.CoreWebView2.ExecuteScriptAsync(command2);
         }
 
-        public static bool IsUrl(string input)
+        public bool IsUrl(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
