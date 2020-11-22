@@ -33,19 +33,19 @@ namespace sakura_usagi
         {
             if (setting != null)
             {
-                string userDataPath = setting.UserDataPath;
+                string userDataPath = setting.Settings.UserDataPath;
                 if (!System.IO.Directory.Exists(userDataPath))
                     System.IO.Directory.CreateDirectory(userDataPath);
 
                 string argment = null;
-                if (!string.IsNullOrEmpty(setting.CachePath))
-                    argment = $"--disk-cache-dir=\"{setting.CachePath}\"";
+                if (!string.IsNullOrEmpty(setting.Settings.CachePath))
+                    argment = $"--disk-cache-dir=\"{setting.Settings.CachePath}\"";
 
                 CoreWebView2EnvironmentOptions options = new CoreWebView2EnvironmentOptions(argment);
                 var environment = await CoreWebView2Environment.CreateAsync(userDataFolder: userDataPath, options: options);
                 await webView.EnsureCoreWebView2Async(environment);
             }
-            webView.Source = new Uri(setting?.HomePage ?? "https://www.google.com");
+            webView.Source = new Uri(setting?.Settings.HomePage ?? "https://www.google.com");
 
             sliderPan.ValueChanged += sliderPan_ValueChanged;
             sliderVolume.ValueChanged += sliderVolume_ValueChanged;
