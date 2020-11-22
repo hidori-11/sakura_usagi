@@ -20,6 +20,7 @@ namespace sakura_usagi
         public AboutInfo()
         {
             InitializeComponent();
+            VersionLabel.Content = "Version: " + ProgramInfo.VERSION_STRING;
         }
     }
 }

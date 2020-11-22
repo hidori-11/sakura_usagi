@@ -30,7 +30,7 @@
                 <RowDefinition Height="1.1*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Label Content="Version: v0.0.3.0-Alpha (Netherland Dwarf)" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#F0F0F0"/>
+            <Label Name="VersionLabel" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#F0F0F0"/>
         </Grid>
         <Border BorderThickness="10" BorderBrush="#606060" Grid.Column="1"/>
     </Grid>
