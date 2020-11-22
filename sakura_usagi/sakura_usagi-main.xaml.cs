@@ -222,5 +222,11 @@ namespace sakura_usagi
             TextBox_Y.IsEnabled = isEnable;
             Reflect.IsEnabled = isEnable;
         }
+
+        private void ButtonAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutInfo aboutWindow = new AboutInfo();
+            aboutWindow.ShowDialog();
+        }
     }
 }
