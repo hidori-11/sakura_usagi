@@ -10,7 +10,7 @@ namespace sakura_usagi
     public partial class MainWindow : Window
     {
         SettingLoader setting;
-        WebViweController[,] webViweControllers;
+        WebViewControl[,] webViweControllers;
 
         TextBox[] rowRatioTextBoxs;
         TextBox[] columnRatioTextBoxs;
@@ -58,7 +58,7 @@ namespace sakura_usagi
                 return;
             }
 
-            var temp_controllers = new WebViweController[column_count, row_count];
+            var temp_controllers = new WebViewControl[column_count, row_count];
 
             int before_x = 0;
             int before_y = 0;
@@ -127,22 +127,19 @@ namespace sakura_usagi
             }
 
 
-            for (int x = 0; x < column_count; x++)
+            for (uint x = 0; x < column_count; x++)
             {
-                for(int y = 0; y < row_count; y++)
+                for(uint y = 0; y < row_count; y++)
                 {
-                    WebViweController web;
+                    WebViewControl web;
                     if (webViweControllers[x, y] == null)
                     {
-                        web = new WebViweController(setting);
+                        web = new WebViewControl(setting);
 
-                        Grid.SetColumn(web, x);
-                        Grid.SetColumn(web.webcontrol, x);
-                        Grid.SetRow(web, y);
-                        Grid.SetRow(web.webcontrol, y);
+                        web.SetGrid(x, y);
 
-                        ControllerGrid.Children.Add(web);
-                        browserWindow.BrowserGrid.Children.Add(web.webcontrol);
+                        ControllerGrid.Children.Add(web.WebViewController);
+                        browserWindow.BrowserGrid.Children.Add(web.WebControl);
                         web.InitWebView();
 
                         webViweControllers[x, y] = web;
@@ -151,8 +148,8 @@ namespace sakura_usagi
                     {
                         web = webViweControllers[x, y];
 
-                        ControllerGrid.Children.Add(web);
-                        browserWindow.BrowserGrid.Children.Add(web.webcontrol);
+                        ControllerGrid.Children.Add(web.WebViewController);
+                        browserWindow.BrowserGrid.Children.Add(web.WebControl);
                     }
                 }
             }
