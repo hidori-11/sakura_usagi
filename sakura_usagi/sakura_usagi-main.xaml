@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="345*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Height="30">
             <Grid.ColumnDefinitions>
@@ -22,7 +23,6 @@
             <ComboBox Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0" />
             <Button Content="Add" Name="Add" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,10,0" Click="Add_Click"/>
             <Button Content="Close" Name="Close" Grid.Column="3" VerticalAlignment="Center" Margin="10,0,10,0" Click="Close_Click"/>
-
         </Grid>
         <TabControl Grid.Row="1" Margin="0,0,0,0">
             <TabItem Header="Basic">
@@ -37,11 +37,11 @@
             <TabItem Header="Grid">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="26*"/>
-                        <RowDefinition Height="26*"/>
-                        <RowDefinition Height="26*"/>
-                        <RowDefinition Height="26*"/>
-                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="200*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -60,9 +60,16 @@
                     <Label Content="Length Ratio" Grid.Row="2"/>
                     <Grid Grid.Row="3" Name="WidthRatio"/>
                     <Grid Grid.Row="4" Name="HeightRatio"/>
-                    
                 </Grid>
             </TabItem>
         </TabControl>
+        <Grid Grid.Row="2" Background="#FFE5E5E5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="About" Grid.Column="1" Click="ButtonAbout_Click"/>
+
+        </Grid>
     </Grid>
 </Window>

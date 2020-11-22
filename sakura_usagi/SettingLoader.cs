@@ -9,42 +9,33 @@ namespace sakura_usagi
     public class SettingLoader
     {
         private string settingFilePath = "setting.json";
-        public string CachePath { get; set; }
-        public string UserDataPath { get; set; }
-        public string HomePage { get; set; }
+        public Settings Settings { set; get; }
 
         public SettingLoader()
         {
+
             if (File.Exists(settingFilePath))
             {
                 string setting_string = File.ReadAllText(settingFilePath);
-                var settings = JsonConvert.DeserializeObject<Settings>(setting_string);
-                
-                UserDataPath = settings.UserDataPath;
-                HomePage = settings.HomePage;
-                CachePath = settings.CachePath;
+                Settings = JsonConvert.DeserializeObject<Settings>(setting_string);
             }
             else
             {
-                Settings settings = new Settings
+                Settings = new Settings
                 {
                     CachePath = "Caches",
                     HomePage = "https://google.com",
                     UserDataPath = "UserDatas"
                 };
 
-                string default_json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+                string default_json = JsonConvert.SerializeObject(Settings, Formatting.Indented);
                 File.WriteAllText(settingFilePath, default_json);
-
-                UserDataPath = settings.UserDataPath;
-                HomePage = settings.HomePage;
-                CachePath = settings.CachePath;
             }
         }
     }
 
     [JsonObject]
-    class Settings
+    public class Settings
     {
         [JsonProperty("CachePath")]
         public string CachePath { get; set; }
