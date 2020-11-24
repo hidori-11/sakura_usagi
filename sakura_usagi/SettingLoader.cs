@@ -25,12 +25,19 @@ namespace sakura_usagi
                 {
                     CachePath = "Caches",
                     HomePage = "https://google.com",
-                    UserDataPath = "UserDatas"
+                    UserDataPath = "UserDatas",
+                    Favorites = new Dictionary<string, string> { }
                 };
 
                 string default_json = JsonConvert.SerializeObject(Settings, Formatting.Indented);
                 File.WriteAllText(settingFilePath, default_json);
             }
+        }
+
+        public void SaveSetting()
+        {
+            string default_json = JsonConvert.SerializeObject(Settings, Formatting.Indented);
+            File.WriteAllText(settingFilePath, default_json);
         }
     }
 
@@ -45,5 +52,9 @@ namespace sakura_usagi
 
         [JsonProperty("HomePage")]
         public string HomePage { get; set; }
+
+        [JsonProperty("Favorite")]
+        public Dictionary<string, string> Favorites { get; set; }
+
     }
 }
