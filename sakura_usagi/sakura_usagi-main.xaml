@@ -65,11 +65,10 @@
         </TabControl>
         <Grid Grid.Row="2" Background="#FFE5E5E5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="7*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="About" Grid.Column="1" Click="ButtonAbout_Click"/>
-
+            <Button Content="CommonSetting" Grid.Column="1" Click="ButtonCommonSetting_Click"/>
         </Grid>
     </Grid>
 </Window>

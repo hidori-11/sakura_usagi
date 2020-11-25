@@ -1,6 +1,8 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.Wpf;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
@@ -10,7 +12,8 @@ namespace sakura_usagi
     {
         public WebView2 WebControl { get; set; }
         public WebViewController WebViewController { get; set; }
-        public SettingLoader Setting { get; set; }
+
+        private SettingLoader Setting;
 
         public WebViewControl(SettingLoader setting)
         {
@@ -19,6 +22,48 @@ namespace sakura_usagi
             WebControl = new WebView2();
             WebControl.Unloaded += This_Unloaded;
             this.Setting = setting;
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
+            WebViewController.ComboBoxFavorite.SelectionChanged += ComboBoxFavorite_SelectionChanged;
+            WebViewController.ComboBoxFavorite.DropDownOpened += ComboBoxFavorite_MouseDown;
+            WebViewController.ButtonFav.Click += ButtonFav_Click;
+        }
+
+        private void ComboBoxFavorite_MouseDown(object sender, EventArgs e)
+        {
+            WebViewController.ComboBoxFavorite.ItemsSource = null;
+            WebViewController.ComboBoxFavorite.Items.Clear();
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
+        }
+
+        private void ButtonFav_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(Setting.Settings.Favorites.TryGetValue(WebControl.CoreWebView2.DocumentTitle, out _))
+            {
+                return;
+            }
+
+            Setting.Settings.Favorites.Add(WebControl.CoreWebView2.DocumentTitle, WebControl.CoreWebView2.Source);
+            WebViewController.ComboBoxFavorite.ItemsSource = null;
+            WebViewController.ComboBoxFavorite.Items.Clear();
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
+            Setting.SaveSetting();
+        }
+
+        private void ComboBoxFavorite_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            {
+                if(WebViewController.ComboBoxFavorite.SelectedIndex == -1)
+                {
+                    return;
+                }
+
+                string URL = ((KeyValuePair<string, string>)WebViewController.ComboBoxFavorite.SelectedItem).Value;
+                if (IsUrl(URL))
+                {
+                    WebControl.CoreWebView2.Navigate(URL);
+                }
+                WebViewController.ComboBoxFavorite.SelectedIndex = -1;
+            }
         }
 
         public void InitWebView()
