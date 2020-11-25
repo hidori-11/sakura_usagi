@@ -8,7 +8,7 @@ namespace sakura_usagi
     {
         public static readonly int MAJOR_VERSION = 0;
         public static readonly int MINOR_VERSION = 0;
-        public static readonly int FEATURE_VERSION = 3;
+        public static readonly int FEATURE_VERSION = 4;
         public static readonly int BUGFIX_VERSION = 0;
         public static readonly string VERSION_TYPE = "-Alpha";
 

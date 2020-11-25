@@ -2,6 +2,7 @@
 using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
@@ -11,7 +12,8 @@ namespace sakura_usagi
     {
         public WebView2 WebControl { get; set; }
         public WebViewController WebViewController { get; set; }
-        public SettingLoader Setting { get; set; }
+
+        private SettingLoader Setting;
 
         public WebViewControl(SettingLoader setting)
         {
@@ -20,16 +22,17 @@ namespace sakura_usagi
             WebControl = new WebView2();
             WebControl.Unloaded += This_Unloaded;
             this.Setting = setting;
-            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites;
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
             WebViewController.ComboBoxFavorite.SelectionChanged += ComboBoxFavorite_SelectionChanged;
-            WebViewController.ComboBoxFavorite.MouseDown += ComboBoxFavorite_MouseDown;
+            WebViewController.ComboBoxFavorite.DropDownOpened += ComboBoxFavorite_MouseDown;
             WebViewController.ButtonFav.Click += ButtonFav_Click;
         }
 
-        private void ComboBoxFavorite_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ComboBoxFavorite_MouseDown(object sender, EventArgs e)
         {
             WebViewController.ComboBoxFavorite.ItemsSource = null;
-            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites;
+            WebViewController.ComboBoxFavorite.Items.Clear();
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
         }
 
         private void ButtonFav_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -41,7 +44,8 @@ namespace sakura_usagi
 
             Setting.Settings.Favorites.Add(WebControl.CoreWebView2.DocumentTitle, WebControl.CoreWebView2.Source);
             WebViewController.ComboBoxFavorite.ItemsSource = null;
-            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites;
+            WebViewController.ComboBoxFavorite.Items.Clear();
+            WebViewController.ComboBoxFavorite.ItemsSource = Setting.Settings.Favorites.ToList();
             Setting.SaveSetting();
         }
 

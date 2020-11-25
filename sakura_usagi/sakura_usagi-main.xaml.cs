@@ -220,10 +220,12 @@ namespace sakura_usagi
             Reflect.IsEnabled = isEnable;
         }
 
-        private void ButtonAbout_Click(object sender, RoutedEventArgs e)
+        private void ButtonCommonSetting_Click(object sender, RoutedEventArgs e)
         {
-            AboutInfo aboutWindow = new AboutInfo();
-            aboutWindow.ShowDialog();
+            CommonConfig conf = new CommonConfig(setting);
+            conf.ShowDialog();
+            //AboutInfo aboutWindow = new AboutInfo();
+            //aboutWindow.ShowDialog();
         }
     }
 }
